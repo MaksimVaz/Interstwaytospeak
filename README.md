@@ -8,7 +8,7 @@ A small interactive invitation for an autumn walk in Dnipro. The "No" button run
 2. **Time** — the date is fixed in config, she types the time on the keyboard (numeric keypad on phones, colon is added automatically).
 3. **Place** — Leaflet + OpenStreetMap map with preset spots; a click anywhere else picks a custom place, or she can just type the place.
 4. **Wish** — optional free text.
-5. **Done** — summary ticket, falling leaves; the answer is sent automatically. A Telegram button appears only if sending fails.
+5. **Done** — summary ticket, falling leaves; the answer is sent automatically. If sending fails, she sees a retry button.
 
 ## Stack
 
@@ -22,7 +22,6 @@ Edit `js/config.js`:
 | --- | --- |
 | `date` | Meeting date (ISO) |
 | `notifyUrl` | URL of the Telegram notify worker — see [worker/README.md](worker/README.md) |
-| `telegramUsername` | Fallback: chat button shown only if automatic sending fails |
 | `web3formsKey` | [Web3Forms](https://web3forms.com) key to receive the answer by email |
 | `places` | Map spots: name, note, `[lat, lng]` |
 

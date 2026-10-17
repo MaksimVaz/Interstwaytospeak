@@ -7,7 +7,6 @@ import {
   yesButtonScale,
   formatDateLabel,
   formatMessage,
-  telegramLink,
   resolvePlace,
   maskTime,
   normalizeTime,
@@ -92,18 +91,6 @@ describe('formatMessage', () => {
   it('adds trimmed wish only when provided', () => {
     const msg = formatMessage({ dateLabel: 'd', time: 't', place: 'p', wish: '  какао  ' });
     expect(msg).toContain('Побажання: какао');
-  });
-});
-
-describe('telegramLink', () => {
-  it('builds a deep link with encoded text', () => {
-    expect(telegramLink('@maks', 'привіт & бувай')).toBe(
-      `https://t.me/maks?text=${encodeURIComponent('привіт & бувай')}`,
-    );
-  });
-
-  it('returns null without username', () => {
-    expect(telegramLink('', 'x')).toBeNull();
   });
 });
 

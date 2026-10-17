@@ -6,7 +6,6 @@ import {
   yesButtonScale,
   formatDateLabel,
   formatMessage,
-  telegramLink,
   resolvePlace,
   placeMessageText,
   placeSummaryText,
@@ -179,26 +178,21 @@ async function finish() {
   dropLeaves();
 
   const status = $('[data-send-status]');
-  status.textContent = 'Надсилаю відповідь…';
-  if (await deliver(message)) {
-    status.textContent = 'Я вже отримав твою відповідь 💌';
-    return;
-  }
+  const retry = $('[data-retry]');
 
-  // Both channels failed — fall back to manual sending
-  status.textContent = 'Не вдалося надіслати автоматично. Надішли, будь ласка, сама 🙏';
-  const tg = $('[data-telegram]');
-  const link = telegramLink(CONFIG.telegramUsername, message);
-  if (link) {
-    tg.href = link;
-    tg.hidden = false;
-  }
-  const copy = $('[data-copy]');
-  copy.hidden = false;
-  copy.onclick = async () => {
-    await navigator.clipboard.writeText(message);
-    status.textContent = 'Скопійовано — вставляй у чат 😉';
+  const send = async () => {
+    retry.hidden = true;
+    status.textContent = 'Надсилаю відповідь…';
+    if (await deliver(message)) {
+      status.textContent = 'Я вже отримав твою відповідь 💌';
+      return;
+    }
+    status.textContent = 'Відповідь не надіслалась — перевір інтернет і спробуй ще раз';
+    retry.hidden = false;
   };
+
+  retry.onclick = send;
+  await send();
 }
 
 function dropLeaves() {

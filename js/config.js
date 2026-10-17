@@ -6,9 +6,6 @@ export const CONFIG = {
   // Worker URL that forwards the answer to your Telegram (see worker/README.md)
   notifyUrl: '',
 
-  // Fallback only: if automatic sending fails, a button opens a chat with you
-  telegramUsername: 'V_Nostradamvs',
-
   // Free key from https://web3forms.com — the answer arrives to your email.
   // The key is public by design (it can only send to your inbox), so it is safe in frontend code.
   web3formsKey: '',

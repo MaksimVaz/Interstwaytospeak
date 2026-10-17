@@ -53,12 +53,6 @@ export function formatMessage({ dateLabel, time, place, wish = '' }) {
   return lines.join('\n');
 }
 
-export function telegramLink(username, text) {
-  const name = username.replace(/^@/, '').trim();
-  if (!name) return null;
-  return `https://t.me/${name}?text=${encodeURIComponent(text)}`;
-}
-
 // Typed text wins over the map pick, so she can always describe the spot in her own words
 export function resolvePlace(mapPlace, typed) {
   const name = typed.trim();
