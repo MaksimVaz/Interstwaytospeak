@@ -7,7 +7,7 @@ export const CONFIG = {
   timeStepMinutes: 30,
 
   // Your Telegram username — the final button opens a chat with you and a ready-made message
-  telegramUsername: '',
+  telegramUsername: 'V_Nostradamvs',
 
   // Optional: free key from https://web3forms.com — the answer also arrives to your email.
   // The key is public by design (it can only send to your inbox), so it is safe in frontend code.

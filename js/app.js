@@ -113,7 +113,8 @@ async function sendEmail(message) {
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({ access_key: CONFIG.web3formsKey, subject: 'Відповідь на запрошення 🍁', message }),
   });
-  return response.ok;
+  const result = await response.json();
+  return response.ok && result.success === true;
 }
 
 function renderSummary() {
