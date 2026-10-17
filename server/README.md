@@ -11,7 +11,7 @@ The bot token lives in environment variables and never appears in the public rep
 ## Deploy on Railway
 
 1. **New Project → Deploy from GitHub repo** → pick this repo.
-2. Service **Settings → Root Directory**: `/server`.
+2. **Root Directory** can stay empty — root `npm start` runs `server/index.js` (setting it to `/server` works too).
 3. **Variables** tab — add the ones from `.env.example`:
    - `TELEGRAM_BOT_TOKEN` — from [@BotFather](https://t.me/BotFather)
    - `TELEGRAM_CHAT_ID` — press **Start** in your bot, then open `https://api.telegram.org/bot<TOKEN>/getUpdates` and copy `"chat":{"id": ...}`

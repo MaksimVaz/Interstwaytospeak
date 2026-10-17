@@ -5,9 +5,13 @@
   "type": "module",
   "description": "A cute interactive invitation for a walk in Dnipro",
   "scripts": {
+    "start": "node server/index.js",
     "dev": "npx serve .",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "devDependencies": {
     "vitest": "^3.2.4"
