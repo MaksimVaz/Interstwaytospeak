@@ -5,7 +5,7 @@ A small interactive invitation for an autumn walk in Dnipro. The "No" button run
 ## Flow
 
 1. **Question** — "Підеш зі мною на прогулянку?" The "No" button jumps to a random spot (never on top of "Yes") and changes its text.
-2. **Time** — the date is fixed in config, she picks a time slot.
+2. **Time** — the date is fixed in config, she types the time herself (native time input).
 3. **Place** — Leaflet + OpenStreetMap map with preset spots; a click anywhere else picks a custom place.
 4. **Wish** — optional free text.
 5. **Done** — summary ticket, falling leaves, "Send to Telegram" button with a pre-filled message.
@@ -21,7 +21,6 @@ Edit `js/config.js`:
 | Field | What it does |
 | --- | --- |
 | `date` | Meeting date (ISO) |
-| `timeFrom` / `timeTo` / `timeStepMinutes` | Time slots |
 | `telegramUsername` | Your username — the final button opens a chat with you |
 | `web3formsKey` | Optional [Web3Forms](https://web3forms.com) key to also receive the answer by email |
 | `places` | Map spots: name, note, `[lat, lng]` |

@@ -1,7 +1,6 @@
 import { CONFIG } from './config.js';
 import { createPlaceMap } from './map.js';
 import {
-  buildTimeSlots,
   randomPositionAvoiding,
   noButtonLabel,
   yesButtonScale,
@@ -73,22 +72,12 @@ function setupAsk() {
 
 /* Step 1: time */
 function setupTime() {
-  const container = $('[data-slots]');
+  const input = $('[data-time]');
   const next = $('[data-screen="time"] [data-next]');
 
-  buildTimeSlots(CONFIG.timeFrom, CONFIG.timeTo, CONFIG.timeStepMinutes).forEach((time) => {
-    const slot = document.createElement('button');
-    slot.type = 'button';
-    slot.className = 'slot';
-    slot.role = 'radio';
-    slot.setAttribute('aria-checked', 'false');
-    slot.textContent = time;
-    slot.addEventListener('click', () => {
-      container.querySelectorAll('.slot').forEach((s) => s.setAttribute('aria-checked', String(s === slot)));
-      state.time = time;
-      next.disabled = false;
-    });
-    container.append(slot);
+  input.addEventListener('input', () => {
+    state.time = input.value || null;
+    next.disabled = !state.time;
   });
 }
 

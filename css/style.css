@@ -70,7 +70,7 @@ body {
   text-align: center;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
-.btn:focus-visible, .slot:focus-visible, .wish:focus-visible {
+.btn:focus-visible, .time-input:focus-visible, .wish:focus-visible {
   outline: 3px solid var(--maple);
   outline-offset: 3px;
 }
@@ -99,22 +99,17 @@ body {
 }
 .btn-yes[data-yes] { transform: scale(var(--yes-scale, 1)); }
 
-/* Time slots */
-.slots {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
-  gap: 0.6rem;
-}
-.slot {
-  font: 600 1.05rem var(--font-body);
-  padding: 0.7rem 0;
-  border: 2px solid var(--plum);
-  border-radius: 0.75rem;
-  background: var(--paper);
+/* Time */
+.time-input {
+  align-self: flex-start;
+  min-width: 11rem;
+  font: 700 2rem var(--font-body);
   color: var(--plum);
-  cursor: pointer;
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--plum);
+  border-radius: 1rem;
+  background: var(--paper);
 }
-.slot[aria-checked='true'] { background: var(--plum); color: var(--paper); }
 
 /* Map */
 .map {

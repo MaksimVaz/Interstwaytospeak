@@ -2,9 +2,6 @@
 
 export const CONFIG = {
   date: '2026-10-20',
-  timeFrom: '15:00',
-  timeTo: '20:00',
-  timeStepMinutes: 30,
 
   // Your Telegram username — the final button opens a chat with you and a ready-made message
   telegramUsername: 'V_Nostradamvs',

@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import {
-  buildTimeSlots,
   randomPosition,
   rectsOverlap,
   randomPositionAvoiding,
@@ -10,20 +9,6 @@ import {
   formatMessage,
   telegramLink,
 } from '../js/lib.js';
-
-describe('buildTimeSlots', () => {
-  it('builds slots inclusive of both ends', () => {
-    expect(buildTimeSlots('15:00', '16:30', 30)).toEqual(['15:00', '15:30', '16:00', '16:30']);
-  });
-
-  it('pads hours and minutes', () => {
-    expect(buildTimeSlots('09:05', '09:15', 10)).toEqual(['09:05', '09:15']);
-  });
-
-  it('returns empty list when start is after end', () => {
-    expect(buildTimeSlots('20:00', '18:00', 30)).toEqual([]);
-  });
-});
 
 describe('randomPosition', () => {
   const viewport = { width: 400, height: 800 };

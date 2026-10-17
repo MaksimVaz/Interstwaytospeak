@@ -10,21 +10,6 @@ const NO_LABELS = [
   'Спробуй «Так»',
 ];
 
-const toMinutes = (hhmm) => {
-  const [h, m] = hhmm.split(':').map(Number);
-  return h * 60 + m;
-};
-
-const pad = (n) => String(n).padStart(2, '0');
-
-export function buildTimeSlots(start, end, stepMinutes) {
-  const slots = [];
-  for (let t = toMinutes(start); t <= toMinutes(end); t += stepMinutes) {
-    slots.push(`${pad(Math.floor(t / 60))}:${pad(t % 60)}`);
-  }
-  return slots;
-}
-
 export function randomPosition(viewport, button, padding, rand = Math.random) {
   const maxX = viewport.width - button.width - padding;
   const maxY = viewport.height - button.height - padding;
