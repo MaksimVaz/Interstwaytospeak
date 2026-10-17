@@ -128,16 +128,29 @@ function pickPlace(place) {
   updatePlace();
 }
 
-/* Final */
-async function sendEmail(message) {
-  if (!CONFIG.web3formsKey) return false;
-  const response = await fetch('https://api.web3forms.com/submit', {
+/* Final: the answer is sent automatically to Telegram (via the worker) and email */
+async function postJson(url, body) {
+  const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ access_key: CONFIG.web3formsKey, subject: 'Відповідь на запрошення 🍁', message }),
+    body: JSON.stringify(body),
   });
-  const result = await response.json();
-  return response.ok && result.success === true;
+  const result = await response.json().catch(() => ({}));
+  return response.ok && (result.ok === true || result.success === true);
+}
+
+async function deliver(message) {
+  const jobs = [];
+  if (CONFIG.notifyUrl) jobs.push(postJson(CONFIG.notifyUrl, { message }));
+  if (CONFIG.web3formsKey) {
+    jobs.push(postJson('https://api.web3forms.com/submit', {
+      access_key: CONFIG.web3formsKey,
+      subject: 'Відповідь на запрошення 🍁',
+      message,
+    }));
+  }
+  const results = await Promise.allSettled(jobs);
+  return results.some((r) => r.status === 'fulfilled' && r.value === true);
 }
 
 function renderSummary() {
@@ -165,23 +178,27 @@ async function finish() {
   show('done');
   dropLeaves();
 
+  const status = $('[data-send-status]');
+  status.textContent = 'Надсилаю відповідь…';
+  if (await deliver(message)) {
+    status.textContent = 'Я вже отримав твою відповідь 💌';
+    return;
+  }
+
+  // Both channels failed — fall back to manual sending
+  status.textContent = 'Не вдалося надіслати автоматично. Надішли, будь ласка, сама 🙏';
   const tg = $('[data-telegram]');
   const link = telegramLink(CONFIG.telegramUsername, message);
   if (link) {
     tg.href = link;
     tg.hidden = false;
   }
-
-  $('[data-copy]').onclick = async () => {
+  const copy = $('[data-copy]');
+  copy.hidden = false;
+  copy.onclick = async () => {
     await navigator.clipboard.writeText(message);
-    $('[data-send-status]').textContent = 'Скопійовано — вставляй у чат 😉';
+    status.textContent = 'Скопійовано — вставляй у чат 😉';
   };
-
-  try {
-    if (await sendEmail(message)) $('[data-send-status]').textContent = 'Я вже отримав твою відповідь 💌';
-  } catch {
-    // Telegram and copy buttons stay as a fallback
-  }
 }
 
 function dropLeaves() {

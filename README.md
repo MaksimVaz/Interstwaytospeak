@@ -1,6 +1,6 @@
 # 🍁 walk-invite
 
-A small interactive invitation for an autumn walk in Dnipro. The "No" button runs away, the "Yes" button grows, and the answer comes back to you via Telegram or email.
+A small interactive invitation for an autumn walk in Dnipro. The "No" button runs away, the "Yes" button grows, and the answer is delivered automatically to your Telegram (via a Cloudflare Worker) and email (Web3Forms).
 
 ## Flow
 
@@ -8,7 +8,7 @@ A small interactive invitation for an autumn walk in Dnipro. The "No" button run
 2. **Time** — the date is fixed in config, she types the time on the keyboard (numeric keypad on phones, colon is added automatically).
 3. **Place** — Leaflet + OpenStreetMap map with preset spots; a click anywhere else picks a custom place, or she can just type the place.
 4. **Wish** — optional free text.
-5. **Done** — summary ticket, falling leaves, "Send to Telegram" button with a pre-filled message.
+5. **Done** — summary ticket, falling leaves; the answer is sent automatically. A Telegram button appears only if sending fails.
 
 ## Stack
 
@@ -21,8 +21,9 @@ Edit `js/config.js`:
 | Field | What it does |
 | --- | --- |
 | `date` | Meeting date (ISO) |
-| `telegramUsername` | Your username — the final button opens a chat with you |
-| `web3formsKey` | Optional [Web3Forms](https://web3forms.com) key to also receive the answer by email |
+| `notifyUrl` | URL of the Telegram notify worker — see [worker/README.md](worker/README.md) |
+| `telegramUsername` | Fallback: chat button shown only if automatic sending fails |
+| `web3formsKey` | [Web3Forms](https://web3forms.com) key to receive the answer by email |
 | `places` | Map spots: name, note, `[lat, lng]` |
 
 ## Run locally
@@ -42,5 +43,6 @@ js/config.js   # settings
 js/lib.js      # pure helpers (tested)
 js/map.js      # Leaflet map
 js/app.js      # screens and DOM wiring
-tests/lib.test.js
+worker/        # Cloudflare Worker: forwards answers to Telegram
+tests/         # Vitest: helpers and worker
 ```

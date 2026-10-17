@@ -3,10 +3,13 @@
 export const CONFIG = {
   date: '2026-10-20',
 
-  // Your Telegram username — the final button opens a chat with you and a ready-made message
+  // Worker URL that forwards the answer to your Telegram (see worker/README.md)
+  notifyUrl: '',
+
+  // Fallback only: if automatic sending fails, a button opens a chat with you
   telegramUsername: 'V_Nostradamvs',
 
-  // Optional: free key from https://web3forms.com — the answer also arrives to your email.
+  // Free key from https://web3forms.com — the answer arrives to your email.
   // The key is public by design (it can only send to your inbox), so it is safe in frontend code.
   web3formsKey: '',
 
