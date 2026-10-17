@@ -7,6 +7,9 @@ import {
   formatDateLabel,
   formatMessage,
   telegramLink,
+  resolvePlace,
+  placeMessageText,
+  placeSummaryText,
 } from './lib.js';
 
 const $ = (selector) => document.querySelector(selector);
@@ -81,17 +84,21 @@ function setupTime() {
   });
 }
 
-/* Step 2: place */
-function pickPlace(place) {
-  state.place = place;
-  $('[data-picked-place]').textContent = place.custom ? 'Вибрано твоє місце 💗' : `Вибрано: ${place.name}`;
-  $('[data-screen="place"] [data-next]').disabled = false;
+/* Step 2: place — map pick or typed text */
+let mapPlace = null;
+
+function updatePlace() {
+  state.place = resolvePlace(mapPlace, $('[data-place-text]').value);
+  let label = 'Місце ще не вибрано';
+  if (state.place?.typed) label = `Вибрано: ${state.place.name} ✍️`;
+  else if (state.place) label = state.place.custom ? 'Вибрано твоє місце 💗' : `Вибрано: ${state.place.name}`;
+  $('[data-picked-place]').textContent = label;
+  $('[data-screen="place"] [data-next]').disabled = !state.place;
 }
 
-function placeText(place) {
-  if (!place.custom) return place.name;
-  const [lat, lng] = place.coords;
-  return `точка на карті https://www.google.com/maps?q=${lat},${lng}`;
+function pickPlace(place) {
+  mapPlace = place;
+  updatePlace();
 }
 
 /* Final */
@@ -111,7 +118,7 @@ function renderSummary() {
   ticket.replaceChildren();
   const rows = [
     ['Коли', `${dateLabel}, ${state.time}`],
-    ['Де', state.place.custom ? 'твоє місце на карті' : state.place.name],
+    ['Де', placeSummaryText(state.place)],
   ];
   if (state.wish.trim()) rows.push(['Побажання', state.wish.trim()]);
   rows.forEach(([label, value]) => {
@@ -125,7 +132,7 @@ function renderSummary() {
 
 async function finish() {
   state.wish = $('[data-wish]').value;
-  const message = formatMessage({ dateLabel, time: state.time, place: placeText(state.place), wish: state.wish });
+  const message = formatMessage({ dateLabel, time: state.time, place: placeMessageText(state.place), wish: state.wish });
 
   renderSummary();
   show('done');
@@ -174,3 +181,4 @@ $$('[data-next]').forEach((btn) => btn.addEventListener('click', () => show(btn.
 $('[data-finish]').addEventListener('click', finish);
 setupAsk();
 setupTime();
+$('[data-place-text]').addEventListener('input', updatePlace);

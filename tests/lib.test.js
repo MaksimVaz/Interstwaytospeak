@@ -8,6 +8,9 @@ import {
   formatDateLabel,
   formatMessage,
   telegramLink,
+  resolvePlace,
+  placeMessageText,
+  placeSummaryText,
 } from '../js/lib.js';
 
 describe('randomPosition', () => {
@@ -98,5 +101,38 @@ describe('telegramLink', () => {
 
   it('returns null without username', () => {
     expect(telegramLink('', 'x')).toBeNull();
+  });
+});
+
+describe('resolvePlace', () => {
+  const park = { name: 'Парк Шевченка', coords: [1, 2] };
+
+  it('prefers typed text over the map pick', () => {
+    expect(resolvePlace(park, '  біля ЦУМу ')).toEqual({ name: 'біля ЦУМу', typed: true });
+  });
+
+  it('falls back to the map pick when text is blank', () => {
+    expect(resolvePlace(park, '   ')).toBe(park);
+  });
+
+  it('returns null when nothing is chosen', () => {
+    expect(resolvePlace(null, '')).toBeNull();
+  });
+});
+
+describe('place texts', () => {
+  const custom = { name: 'Твоє місце на карті', coords: [48.1, 35.2], custom: true };
+
+  it('uses a Google Maps link for a custom map point in the message', () => {
+    expect(placeMessageText(custom)).toBe('точка на карті https://www.google.com/maps?q=48.1,35.2');
+  });
+
+  it('uses the name for preset and typed places', () => {
+    expect(placeMessageText({ name: 'Парк Глоби' })).toBe('Парк Глоби');
+    expect(placeSummaryText({ name: 'біля ЦУМу', typed: true })).toBe('біля ЦУМу');
+  });
+
+  it('shows a friendly label for a custom point in the summary', () => {
+    expect(placeSummaryText(custom)).toBe('твоє місце на карті');
   });
 });

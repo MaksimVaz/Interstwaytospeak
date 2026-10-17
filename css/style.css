@@ -175,3 +175,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Typed place */
+.place-label { font-weight: 600; margin-top: 0.25rem; }
+.place-input {
+  font: 1.05rem var(--font-body);
+  color: var(--plum);
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--plum);
+  border-radius: 1rem;
+  background: var(--paper);
+}
+.place-input:focus-visible { outline: 3px solid var(--maple); outline-offset: 3px; }

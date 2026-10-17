@@ -58,3 +58,19 @@ export function telegramLink(username, text) {
   if (!name) return null;
   return `https://t.me/${name}?text=${encodeURIComponent(text)}`;
 }
+
+// Typed text wins over the map pick, so she can always describe the spot in her own words
+export function resolvePlace(mapPlace, typed) {
+  const name = typed.trim();
+  return name ? { name, typed: true } : mapPlace;
+}
+
+export function placeMessageText(place) {
+  if (!place.custom) return place.name;
+  const [lat, lng] = place.coords;
+  return `точка на карті https://www.google.com/maps?q=${lat},${lng}`;
+}
+
+export function placeSummaryText(place) {
+  return place.custom ? 'твоє місце на карті' : place.name;
+}

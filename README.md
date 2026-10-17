@@ -6,7 +6,7 @@ A small interactive invitation for an autumn walk in Dnipro. The "No" button run
 
 1. **Question** — "Підеш зі мною на прогулянку?" The "No" button jumps to a random spot (never on top of "Yes") and changes its text.
 2. **Time** — the date is fixed in config, she types the time herself (native time input).
-3. **Place** — Leaflet + OpenStreetMap map with preset spots; a click anywhere else picks a custom place.
+3. **Place** — Leaflet + OpenStreetMap map with preset spots; a click anywhere else picks a custom place, or she can just type the place.
 4. **Wish** — optional free text.
 5. **Done** — summary ticket, falling leaves, "Send to Telegram" button with a pre-filled message.
 
