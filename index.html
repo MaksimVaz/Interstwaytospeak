@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Маленьке питання</title>
+  <meta name="description" content="Тут є одне питання лише для тебе">
+  <meta property="og:title" content="Маленьке питання 🍁">
+  <meta property="og:description" content="Відкрий, тут одне питання лише для тебе">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="stage">
+
+    <section class="screen is-active" data-screen="ask" aria-labelledby="ask-title">
+      <p class="hello">Привіт 👋</p>
+      <h1 id="ask-title" class="headline">Підеш зі мною<br>на прогулянку?</h1>
+      <p class="lead" data-date-label></p>
+      <div class="answers">
+        <button type="button" class="btn btn-yes" data-yes>Так</button>
+        <button type="button" class="btn btn-no" data-no>Ні</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="time" aria-labelledby="time-title">
+      <p class="step">Крок 1 з 3</p>
+      <h2 id="time-title" class="headline">Ура! О котрій?</h2>
+      <p class="lead">День уже вибрано: <strong data-date-label></strong>. Обери годину.</p>
+      <div class="slots" role="radiogroup" aria-label="Час зустрічі" data-slots></div>
+      <button type="button" class="btn btn-next" data-next="place" disabled>Далі</button>
+    </section>
+
+    <section class="screen" data-screen="place" aria-labelledby="place-title">
+      <p class="step">Крок 2 з 3</p>
+      <h2 id="place-title" class="headline">Де зустрінемось?</h2>
+      <p class="lead">Натисни на листочок на карті — або на будь-яке інше місце, якщо маєш свою ідею.</p>
+      <div class="map" data-map></div>
+      <p class="picked" data-picked-place aria-live="polite">Місце ще не вибрано</p>
+      <button type="button" class="btn btn-next" data-next="wish" disabled>Далі</button>
+    </section>
+
+    <section class="screen" data-screen="wish" aria-labelledby="wish-title">
+      <p class="step">Крок 3 з 3</p>
+      <h2 id="wish-title" class="headline">Є побажання?</h2>
+      <p class="lead">Кава, какао, морозиво попри осінь, улюблена пісня — пиши що завгодно. Можна й пропустити.</p>
+      <label class="sr-only" for="wish">Твої побажання</label>
+      <textarea id="wish" class="wish" rows="4" maxlength="500" placeholder="Хочу какао з маршмелоу…" data-wish></textarea>
+      <button type="button" class="btn btn-yes" data-finish>Готово</button>
+    </section>
+
+    <section class="screen" data-screen="done" aria-labelledby="done-title">
+      <h2 id="done-title" class="headline">Домовились! 🍁</h2>
+      <div class="ticket" data-summary></div>
+      <p class="lead" data-send-status aria-live="polite"></p>
+      <a class="btn btn-yes" data-telegram target="_blank" rel="noopener" hidden>Надіслати мені в Telegram</a>
+      <button type="button" class="btn btn-ghost" data-copy>Скопіювати текст</button>
+    </section>
+
+  </main>
+
+  <div class="leaves" aria-hidden="true" data-leaves></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
