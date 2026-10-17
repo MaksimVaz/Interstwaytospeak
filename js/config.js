@@ -4,7 +4,7 @@ export const CONFIG = {
   date: '2026-10-20',
 
   // Railway server URL that forwards the answer to your Telegram (see server/README.md)
-  notifyUrl: '',
+  notifyUrl: 'https://interstwaytospeak-production.up.railway.app',
 
   // Free key from https://web3forms.com — the answer arrives to your email.
   // The key is public by design (it can only send to your inbox), so it is safe in frontend code.
