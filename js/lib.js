@@ -74,3 +74,22 @@ export function placeMessageText(place) {
 export function placeSummaryText(place) {
   return place.custom ? 'твоє місце на карті' : place.name;
 }
+
+// Time is typed on the keyboard: digits only, the colon appears by itself
+export function maskTime(raw) {
+  const digits = raw.replace(/\D/g, '').slice(0, 4);
+  return digits.length > 2 ? `${digits.slice(0, 2)}:${digits.slice(2)}` : digits;
+}
+
+// "9" → "09:00", "18" → "18:00", "930" → "09:30"
+export function normalizeTime(value) {
+  const digits = value.replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.length <= 2) return `${digits.padStart(2, '0')}:00`;
+  const full = digits.padStart(4, '0').slice(0, 4);
+  return `${full.slice(0, 2)}:${full.slice(2)}`;
+}
+
+export function isValidTime(value) {
+  return /^([01]\d|2[0-3]):[0-5]\d$/.test(value);
+}

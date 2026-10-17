@@ -9,6 +9,9 @@ import {
   formatMessage,
   telegramLink,
   resolvePlace,
+  maskTime,
+  normalizeTime,
+  isValidTime,
   placeMessageText,
   placeSummaryText,
 } from '../js/lib.js';
@@ -134,5 +137,42 @@ describe('place texts', () => {
 
   it('shows a friendly label for a custom point in the summary', () => {
     expect(placeSummaryText(custom)).toBe('твоє місце на карті');
+  });
+});
+
+describe('maskTime', () => {
+  it('keeps only digits and inserts a colon after hours', () => {
+    expect(maskTime('1')).toBe('1');
+    expect(maskTime('18')).toBe('18');
+    expect(maskTime('183')).toBe('18:3');
+    expect(maskTime('1830')).toBe('18:30');
+    expect(maskTime('18:30')).toBe('18:30');
+  });
+
+  it('drops letters and extra digits', () => {
+    expect(maskTime('1a8b3c0d9')).toBe('18:30');
+  });
+});
+
+describe('normalizeTime', () => {
+  it('completes short inputs', () => {
+    expect(normalizeTime('9')).toBe('09:00');
+    expect(normalizeTime('18')).toBe('18:00');
+    expect(normalizeTime('930')).toBe('09:30');
+    expect(normalizeTime('18:30')).toBe('18:30');
+  });
+
+  it('leaves empty input empty', () => {
+    expect(normalizeTime('')).toBe('');
+  });
+});
+
+describe('isValidTime', () => {
+  it('accepts real times only', () => {
+    expect(isValidTime('00:00')).toBe(true);
+    expect(isValidTime('23:59')).toBe(true);
+    expect(isValidTime('24:00')).toBe(false);
+    expect(isValidTime('18:60')).toBe(false);
+    expect(isValidTime('18:3')).toBe(false);
   });
 });

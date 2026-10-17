@@ -10,6 +10,9 @@ import {
   resolvePlace,
   placeMessageText,
   placeSummaryText,
+  maskTime,
+  normalizeTime,
+  isValidTime,
 } from './lib.js';
 
 const $ = (selector) => document.querySelector(selector);
@@ -78,9 +81,33 @@ function setupTime() {
   const input = $('[data-time]');
   const next = $('[data-screen="time"] [data-next]');
 
+  const hint = $('[data-time-hint]');
+  const defaultHint = hint.textContent;
+
   input.addEventListener('input', () => {
-    state.time = input.value || null;
+    input.value = maskTime(input.value);
+    // At least two digits, so a single "1" does not silently become 01:00
+    const enough = input.value.replace(/\D/g, '').length >= 2;
+    const time = normalizeTime(input.value);
+    state.time = enough && isValidTime(time) ? time : null;
     next.disabled = !state.time;
+    hint.textContent = defaultHint;
+    hint.classList.remove('is-error');
+  });
+
+  input.addEventListener('blur', () => {
+    if (state.time) input.value = state.time;
+    else if (input.value) {
+      hint.textContent = 'Такого часу не буває 🙃 Спробуй, наприклад, 18:30';
+      hint.classList.add('is-error');
+    }
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && state.time) {
+      input.value = state.time;
+      show('place');
+    }
   });
 }
 
