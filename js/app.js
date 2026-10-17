@@ -127,7 +127,7 @@ function pickPlace(place) {
   updatePlace();
 }
 
-/* Final: the answer is sent automatically to Telegram (via the worker) and email */
+/* Final: the answer is sent automatically to Telegram (via the Railway server) and email */
 async function postJson(url, body) {
   const response = await fetch(url, {
     method: 'POST',

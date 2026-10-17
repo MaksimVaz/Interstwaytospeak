@@ -3,7 +3,7 @@
 export const CONFIG = {
   date: '2026-10-20',
 
-  // Worker URL that forwards the answer to your Telegram (see worker/README.md)
+  // Railway server URL that forwards the answer to your Telegram (see server/README.md)
   notifyUrl: '',
 
   // Free key from https://web3forms.com — the answer arrives to your email.

@@ -1,5 +1,5 @@
 // Receives the answer from the site and forwards it to Telegram.
-// The bot token lives in Cloudflare secrets, never in the public frontend.
+// The bot token lives in server env variables, never in the public frontend.
 
 const MAX_MESSAGE_LENGTH = 1000;
 
@@ -35,7 +35,7 @@ export async function handleRequest(request, env, fetchImpl = fetch) {
   }
 
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) {
-    return json(500, { ok: false, error: 'worker is not configured' }, cors);
+    return json(500, { ok: false, error: 'server is not configured' }, cors);
   }
 
   const tgResponse = await fetchImpl(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { handleRequest } from '../worker/src/handler.js';
+import { handleRequest } from '../server/handler.js';
 
 const SITE = 'https://maksimvaz.github.io';
 const env = {
@@ -17,7 +17,7 @@ const post = (body, origin = SITE) =>
 
 const okTelegram = () => vi.fn(async () => new Response(JSON.stringify({ ok: true }), { status: 200 }));
 
-describe('worker handleRequest', () => {
+describe('handleRequest', () => {
   it('answers CORS preflight for the site', async () => {
     const res = await handleRequest(new Request('https://notify.example/', { method: 'OPTIONS', headers: { Origin: SITE } }), env, okTelegram());
     expect(res.status).toBe(204);

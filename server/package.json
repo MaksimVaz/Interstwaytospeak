@@ -1,0 +1,14 @@
+{
+  "name": "walk-invite-notify",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Forwards invitation answers to Telegram",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --env-file=.env --watch index.js"
+  }
+}

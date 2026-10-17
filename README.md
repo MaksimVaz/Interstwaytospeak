@@ -1,6 +1,6 @@
 # 🍁 walk-invite
 
-A small interactive invitation for an autumn walk in Dnipro. The "No" button runs away, the "Yes" button grows, and the answer is delivered automatically to your Telegram (via a Cloudflare Worker) and email (Web3Forms).
+A small interactive invitation for an autumn walk in Dnipro. The "No" button runs away, the "Yes" button grows, and the answer is delivered automatically to your Telegram (via a small Node server on Railway) and email (Web3Forms).
 
 ## Flow
 
@@ -21,7 +21,7 @@ Edit `js/config.js`:
 | Field | What it does |
 | --- | --- |
 | `date` | Meeting date (ISO) |
-| `notifyUrl` | URL of the Telegram notify worker — see [worker/README.md](worker/README.md) |
+| `notifyUrl` | URL of the Telegram notify server — see [server/README.md](server/README.md) |
 | `web3formsKey` | [Web3Forms](https://web3forms.com) key to receive the answer by email |
 | `places` | Map spots: name, note, `[lat, lng]` |
 
@@ -42,6 +42,6 @@ js/config.js   # settings
 js/lib.js      # pure helpers (tested)
 js/map.js      # Leaflet map
 js/app.js      # screens and DOM wiring
-worker/        # Cloudflare Worker: forwards answers to Telegram
-tests/         # Vitest: helpers and worker
+server/        # Node server for Railway: forwards answers to Telegram
+tests/         # Vitest: helpers, handler, server
 ```

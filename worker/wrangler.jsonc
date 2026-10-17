@@ -1,9 +1,0 @@
-{
-  "name": "walk-invite-notify",
-  "main": "src/index.js",
-  "compatibility_date": "2026-10-17",
-  "vars": {
-    "ALLOWED_ORIGINS": "https://maksimvaz.github.io,http://localhost:8765,http://localhost:3000"
-  }
-  // Secrets (not in git): wrangler secret put TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID
-}
